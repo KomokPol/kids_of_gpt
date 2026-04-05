@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package zondex.profile.v1;
+
+option go_package = "example.com/zondex/proto/profile/v1;profilev1";
+
+message Profile {
+  string user_id = 1;
+  string nickname = 2;
+  string article = 3;
+  string term = 4;
+  string cell = 5;
+  string photo_url = 6;
+}
+
+message CreateProfileRequest {
+  Profile profile = 1;
+  string idempotency_key = 2;
+}
+
+message CreateProfileResponse {
+  string profile_id = 1;
+}
+
+message GetProfileRequest {
+  string user_id = 1;
+}
+
+message GetProfileResponse {
+  Profile profile = 1;
+}
+
+message UpdateProfileRequest {
+  Profile profile = 1;
+}
+
+message UpdateProfileResponse {
+  Profile profile = 1;
+}
+
+service ProfileService {
+  rpc CreateProfile(CreateProfileRequest) returns (CreateProfileResponse);
+  rpc GetProfile(GetProfileRequest) returns (GetProfileResponse);
+  rpc UpdateProfile(UpdateProfileRequest) returns (UpdateProfileResponse);
+}

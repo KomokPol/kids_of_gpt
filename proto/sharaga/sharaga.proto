@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package zondex.sharaga.v1;
+
+option go_package = "example.com/zondex/proto/sharaga/v1;sharagav1";
+
+enum ChallengeMode {
+  CHALLENGE_MODE_UNSPECIFIED = 0;
+  CHALLENGE_MODE_QUIZ = 1;
+  CHALLENGE_MODE_SCENARIO = 2;
+  CHALLENGE_MODE_INTERROGATION = 3;
+}
+
+message RunChallengeRequest {
+  string user_id = 1;
+  string challenge_id = 2;
+  ChallengeMode mode = 3;
+  string idempotency_key = 4;
+}
+
+message RunChallengeResponse {
+  bool success = 1;
+  int64 xp_awarded = 2;
+  int64 money_awarded = 3;
+  int64 wallet_balance = 4;
+  int32 new_level = 5;
+}
+
+service SharagaService {
+  rpc RunChallenge(RunChallengeRequest) returns (RunChallengeResponse);
+}

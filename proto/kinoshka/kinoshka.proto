@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package zondex.kinoshka.v1;
+
+option go_package = "example.com/zondex/proto/kinoshka/v1;kinoshkav1";
+
+message Film {
+  string film_id = 1;
+  string title = 2;
+  bool free = 3;
+}
+
+message ListFilmsRequest {
+  string user_id = 1;
+}
+
+message ListFilmsResponse {
+  repeated Film films = 1;
+}
+
+service KinoshkaService {
+  rpc ListFilms(ListFilmsRequest) returns (ListFilmsResponse);
+}

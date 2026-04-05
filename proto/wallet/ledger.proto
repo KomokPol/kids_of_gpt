@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+package zondex.wallet.v1;
+
+option go_package = "example.com/zondex/proto/wallet/v1;walletv1";
+
+enum EntryType {
+  ENTRY_TYPE_UNSPECIFIED = 0;
+  ENTRY_TYPE_CREDIT = 1;
+  ENTRY_TYPE_DEBIT = 2;
+  ENTRY_TYPE_DEBT_ACCRUAL = 3;
+  ENTRY_TYPE_ADJUSTMENT = 4;
+}
+
+message LedgerEntry {
+  string entry_id = 1;
+  string user_id = 2;
+  int64 amount = 3;
+  EntryType entry_type = 4;
+  string source = 5;
+  string idempotency_key = 6;
+  int64 created_at_unix = 7;
+}
+
+message InitWalletRequest {
+  string user_id = 1;
+  int64 initial_balance = 2;
+  string idempotency_key = 3;
+}
+
+message InitWalletResponse {
+  int64 balance = 1;
+}
+
+message GetBalanceRequest {
+  string user_id = 1;
+}
+
+message GetBalanceResponse {
+  int64 balance = 1;
+  int64 debt_balance = 2;
+}
+
+message CreditRequest {
+  string user_id = 1;
+  int64 amount = 2;
+  string source = 3;
+  string idempotency_key = 4;
+}
+
+message CreditResponse {
+  int64 balance = 1;
+}
+
+message DebitRequest {
+  string user_id = 1;
+  int64 amount = 2;
+  string source = 3;
+  string idempotency_key = 4;
+}
+
+message DebitResponse {
+  int64 balance = 1;
+}
+
+message AccrueDebtInterestRequest {
+  string user_id = 1;
+  int32 rate_bps = 2;
+  string idempotency_key = 3;
+}
+
+message AccrueDebtInterestResponse {
+  int64 debt_balance = 1;
+}
+
+message ListLedgerEntriesRequest {
+  string user_id = 1;
+  int32 limit = 2;
+  string cursor = 3;
+}
+
+message ListLedgerEntriesResponse {
+  repeated LedgerEntry entries = 1;
+  string next_cursor = 2;
+}
+
+service WalletService {
+  rpc InitWallet(InitWalletRequest) returns (InitWalletResponse);
+  rpc GetBalance(GetBalanceRequest) returns (GetBalanceResponse);
+  rpc Credit(CreditRequest) returns (CreditResponse);
+  rpc Debit(DebitRequest) returns (DebitResponse);
+  rpc AccrueDebtInterest(AccrueDebtInterestRequest) returns (AccrueDebtInterestResponse);
+  rpc ListLedgerEntries(ListLedgerEntriesRequest) returns (ListLedgerEntriesResponse);
+}

@@ -1,0 +1,90 @@
+syntax = "proto3";
+
+package zondex.entitlements.v1;
+
+option go_package = "example.com/zondex/proto/entitlements/v1;entitlementsv1";
+
+message EntitlementSnapshot {
+  int32 level = 1;
+  int64 xp = 2;
+  int64 wallet_balance = 3;
+  int64 debt_balance = 4;
+  bool search_enabled = 5;
+  bool filters_enabled = 6;
+  int32 cart_limit = 7;
+  repeated string delivery_modes = 8;
+  bool precise_eta_enabled = 9;
+  int32 menu_choice_count = 10;
+  bool daily_spin_available = 11;
+  int64 banned_until_unix = 12;
+  bool can_early_unban_via_tasks = 13;
+  string film_subscription_tier = 14;
+}
+
+message InitProgressRequest {
+  string user_id = 1;
+  int32 level = 2;
+  int64 xp = 3;
+  string idempotency_key = 4;
+}
+
+message InitProgressResponse {
+  EntitlementSnapshot snapshot = 1;
+}
+
+message GetSnapshotRequest {
+  string user_id = 1;
+}
+
+message GetSnapshotResponse {
+  EntitlementSnapshot snapshot = 1;
+}
+
+message GrantXPRequest {
+  string user_id = 1;
+  int64 xp = 2;
+  string source = 3;
+  string idempotency_key = 4;
+}
+
+message GrantXPResponse {
+  EntitlementSnapshot snapshot = 1;
+}
+
+message RecalculateRestrictionsRequest {
+  string user_id = 1;
+  int64 wallet_balance = 2;
+  int64 debt_balance = 3;
+}
+
+message RecalculateRestrictionsResponse {
+  EntitlementSnapshot snapshot = 1;
+}
+
+message ApplyManualBanRequest {
+  string user_id = 1;
+  int64 banned_until_unix = 2;
+  string reason = 3;
+}
+
+message ApplyManualBanResponse {
+  EntitlementSnapshot snapshot = 1;
+}
+
+message LiftBanRequest {
+  string user_id = 1;
+  string reason = 2;
+}
+
+message LiftBanResponse {
+  EntitlementSnapshot snapshot = 1;
+}
+
+service ProgressionService {
+  rpc InitProgress(InitProgressRequest) returns (InitProgressResponse);
+  rpc GetSnapshot(GetSnapshotRequest) returns (GetSnapshotResponse);
+  rpc GrantXP(GrantXPRequest) returns (GrantXPResponse);
+  rpc RecalculateRestrictions(RecalculateRestrictionsRequest) returns (RecalculateRestrictionsResponse);
+  rpc ApplyManualBan(ApplyManualBanRequest) returns (ApplyManualBanResponse);
+  rpc LiftBan(LiftBanRequest) returns (LiftBanResponse);
+}

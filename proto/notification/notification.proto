@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package zondex.notification.v1;
+
+option go_package = "example.com/zondex/proto/notification/v1;notificationv1";
+
+message SendNotificationRequest {
+  string user_id = 1;
+  string title = 2;
+  string body = 3;
+}
+
+message SendNotificationResponse {
+  bool accepted = 1;
+}
+
+service NotificationService {
+  rpc SendNotification(SendNotificationRequest) returns (SendNotificationResponse);
+}

@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package zondex.registry.v1;
+
+option go_package = "example.com/zondex/proto/registry/v1;registryv1";
+
+message IdentityInfo {
+  string user_id = 1;
+  string inmate_number = 2;
+}
+
+message SessionTokens {
+  string access_token = 1;
+  string refresh_token = 2;
+  int64 access_expires_at_unix = 3;
+}
+
+message RegisterRequest {
+  string nickname = 1;
+  string article = 2;
+  string term = 3;
+  string cell = 4;
+  string pin = 5;
+  string photo_url = 6;
+  bool accepted_rules = 7;
+  string idempotency_key = 8;
+}
+
+message RegisterResponse {
+  IdentityInfo identity = 1;
+  string barcode_url = 2;
+  SessionTokens session = 3;
+}
+
+message LoginRequest {
+  string inmate_number = 1;
+  string pin = 2;
+}
+
+message LoginResponse {
+  IdentityInfo identity = 1;
+  SessionTokens session = 2;
+}
+
+message RefreshSessionRequest {
+  string refresh_token = 1;
+}
+
+message RefreshSessionResponse {
+  SessionTokens session = 1;
+}
+
+service RegistryService {
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc RefreshSession(RefreshSessionRequest) returns (RefreshSessionResponse);
+}

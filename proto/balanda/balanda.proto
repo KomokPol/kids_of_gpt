@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package zondex.balanda.v1;
+
+option go_package = "example.com/zondex/proto/balanda/v1;balandav1";
+
+message MenuItem {
+  string item_id = 1;
+  string title = 2;
+  int64 price = 3;
+}
+
+message ListMenuRequest {
+  string user_id = 1;
+}
+
+message ListMenuResponse {
+  repeated MenuItem items = 1;
+}
+
+service BalandaService {
+  rpc ListMenu(ListMenuRequest) returns (ListMenuResponse);
+}
