@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package zondex.eta_engine.v1;
+
+option cc_enable_arenas = true;
+
+message CalculateETARequest {
+  string order_id = 1;
+  string user_id = 2;
+  string delivery_mode = 3;
+  int32  item_count = 4;
+  bool   precise_eta_enabled = 5;
+  string correlation_id = 6;
+}
+
+message CalculateETAResponse {
+  string order_id = 1;
+  int64  eta_seconds = 2;
+  string eta_display = 3;
+  string delivery_mode = 4;
+  bool   is_precise = 5;
+}
+
+message GetDeliveryWindowsRequest {
+  string user_id = 1;
+  repeated string allowed_delivery_modes = 2;
+  string correlation_id = 3;
+}
+
+message GetDeliveryWindowsResponse {
+  repeated DeliveryWindow windows = 1;
+}
+
+message DeliveryWindow {
+  string delivery_mode = 1;
+  string display_name = 2;
+  int64  min_eta_seconds = 3;
+  int64  max_eta_seconds = 4;
+  bool   available = 5;
+  string unavailable_reason = 6;
+}
+
+service EtaEngineService {
+  rpc CalculateETA(CalculateETARequest) returns (CalculateETAResponse);
+  rpc GetDeliveryWindows(GetDeliveryWindowsRequest) returns (GetDeliveryWindowsResponse);
+}

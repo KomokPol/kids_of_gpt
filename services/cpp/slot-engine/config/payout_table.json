@@ -1,0 +1,55 @@
+{
+  "num_reels": 3,
+  "num_symbols": 6,
+  "symbol_weights": [30, 25, 20, 12, 8, 5],
+  "rules": [
+    {
+      "combination_name": "seven_triple",
+      "pattern": [5, 5, 5],
+      "multiplier": 50.0,
+      "is_jackpot": true
+    },
+    {
+      "combination_name": "bar_triple",
+      "pattern": [4, 4, 4],
+      "multiplier": 20.0,
+      "is_jackpot": false
+    },
+    {
+      "combination_name": "bell_triple",
+      "pattern": [3, 3, 3],
+      "multiplier": 10.0,
+      "is_jackpot": false
+    },
+    {
+      "combination_name": "cherry_triple",
+      "pattern": [2, 2, 2],
+      "multiplier": 5.0,
+      "is_jackpot": false
+    },
+    {
+      "combination_name": "lemon_triple",
+      "pattern": [1, 1, 1],
+      "multiplier": 3.0,
+      "is_jackpot": false
+    },
+    {
+      "combination_name": "plum_triple",
+      "pattern": [0, 0, 0],
+      "multiplier": 2.0,
+      "is_jackpot": false
+    },
+    {
+      "combination_name": "cherry_double",
+      "pattern": [2, 2, -1],
+      "multiplier": 1.5,
+      "is_jackpot": false
+    },
+    {
+      "combination_name": "any_bar_pair",
+      "pattern": [4, 4, -1],
+      "multiplier": 2.0,
+      "is_jackpot": false
+    }
+  ]
+}

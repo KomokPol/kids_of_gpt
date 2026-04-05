@@ -1,0 +1,12 @@
+{
+  "name": "eta-engine",
+  "version-string": "0.1.0",
+  "description": "ZONDEX eta-engine: ETA and delivery window calculation for Balanda",
+  "dependencies": [
+    "grpc",
+    "protobuf",
+    "nlohmann-json",
+    "spdlog",
+    "gtest"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "modes": [
+    {
+      "delivery_mode": "as_is",
+      "display_name": "Как есть",
+      "min_seconds": 1200,
+      "max_seconds": 2400
+    },
+    {
+      "delivery_mode": "heated",
+      "display_name": "Подогретая",
+      "min_seconds": 1500,
+      "max_seconds": 2700
+    },
+    {
+      "delivery_mode": "express_tunnel",
+      "display_name": "Экспресс-подкоп",
+      "min_seconds": 600,
+      "max_seconds": 1200
+    }
+  ]
+}

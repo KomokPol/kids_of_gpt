@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package zondex.slot_engine.v1;
+
+option cc_enable_arenas = true;
+
+message CalculateOutcomeRequest {
+  string spin_id = 1;
+  string user_id = 2;
+  int64  stake = 3;
+  string correlation_id = 4;
+  optional int64 seed = 5;
+}
+
+message CalculateOutcomeResponse {
+  string spin_id = 1;
+  repeated int32 reels = 2;
+  string combination_name = 3;
+  double multiplier = 4;
+  int64  delta = 5;
+  bool   is_jackpot = 6;
+}
+
+message GetPayoutTableRequest {}
+
+message GetPayoutTableResponse {
+  repeated PayoutRule rules = 1;
+}
+
+message PayoutRule {
+  string combination_name = 1;
+  repeated int32 pattern = 2;
+  double multiplier = 3;
+  double probability = 4;
+}
+
+service SlotEngineService {
+  rpc CalculateOutcome(CalculateOutcomeRequest) returns (CalculateOutcomeResponse);
+  rpc GetPayoutTable(GetPayoutTableRequest) returns (GetPayoutTableResponse);
+}
