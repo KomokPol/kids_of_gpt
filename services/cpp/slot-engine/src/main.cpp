@@ -8,6 +8,7 @@
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
+#include <chrono>
 #include <csignal>
 #include <memory>
 #include <string>
@@ -19,7 +20,8 @@ std::unique_ptr<grpc::Server> g_server;
 void shutdown_handler(int /*sig*/) {
     spdlog::info(R"({"service":"slot-engine","msg":"SIGTERM received, shutting down"})");
     if (g_server) {
-        g_server->Shutdown();
+        auto deadline = std::chrono::system_clock::now() + std::chrono::seconds(5);
+        g_server->Shutdown(deadline);
     }
 }
 

@@ -1,0 +1,227 @@
+[
+  {
+    "item_id": "barygi-shokolad-alenka",
+    "title": "Шоколад «Алёнка»",
+    "description": "Плитка с голубыми глазами с обёртки — как фото из дома. Делить не обязательно, но мирнее.",
+    "category": "barygi",
+    "price": 120,
+    "min_level": 0,
+    "tags": ["сладкое", "обмен"]
+  },
+  {
+    "item_id": "barygi-chay-princessa-nuri",
+    "title": "Пачка чая «Принцесса Нури»",
+    "description": "Крепкий аромат, будто чайная лавка на рынке. Заварить в кружке из столовой — и вечер теплее.",
+    "category": "barygi",
+    "price": 80,
+    "min_level": 0,
+    "tags": ["напиток", "обмен"]
+  },
+  {
+    "item_id": "barygi-sigarety-belomor",
+    "title": "Сигареты «Беломорканал»",
+    "description": "Классика зоны. Меняют на услуги, на кофе, на спокойствие в очереди на передачку.",
+    "category": "barygi",
+    "price": 200,
+    "min_level": 1,
+    "tags": ["табак", "валюта"]
+  },
+  {
+    "item_id": "barygi-karty-igr",
+    "title": "Карты игральные",
+    "description": "Потёртые, но честные. С ними коротают срок и выясняют, кто сегодня «барыга удачи».",
+    "category": "barygi",
+    "price": 150,
+    "min_level": 0,
+    "tags": ["игра", "досуг"]
+  },
+  {
+    "item_id": "barygi-kniga-sudnyy-den",
+    "title": "Книга «Судный день»",
+    "description": "Бумажный триллер с закладкой из нитки. Читают шёпотом, чтобы не отвлекать соседа по бараку.",
+    "category": "barygi",
+    "price": 90,
+    "min_level": 2,
+    "tags": ["чтение", "досуг"]
+  },
+  {
+    "item_id": "barygi-krossvordy",
+    "title": "Сборник кроссвордов",
+    "description": "Газетные страницы, аккуратно сшитые. Убивают время лучше, чем сплетни о сроках.",
+    "category": "barygi",
+    "price": 60,
+    "min_level": 0,
+    "tags": ["головоломка", "досуг"]
+  },
+  {
+    "item_id": "barygi-noski-teplye",
+    "title": "Тёплые носки",
+    "description": "Серые, плотные, «как у деда». В камере это почти любовь — особенно зимой.",
+    "category": "barygi",
+    "price": 110,
+    "min_level": 0,
+    "tags": ["одежда", "комфорт"]
+  },
+  {
+    "item_id": "barygi-termos-05",
+    "title": "Термос 0,5 л",
+    "description": "Боевой: держит чай до обхода. На крышке — вмятина «от характера».",
+    "category": "barygi",
+    "price": 250,
+    "min_level": 1,
+    "tags": ["посуда", "чай"]
+  },
+  {
+    "item_id": "barygi-ruchka-snaiperskaya",
+    "title": "Ручка «снайперская»",
+    "description": "Длинный стержень, удобно писать жалобы и письма домой мелким почерком.",
+    "category": "barygi",
+    "price": 40,
+    "min_level": 3,
+    "tags": ["канцелярия"]
+  },
+  {
+    "item_id": "barygi-bloknot-tverdy",
+    "title": "Блокнот в твёрдой обложке",
+    "description": "Под стихи, рисунки оков и планы «на воле». Обложка клеёнчатая — выдержит сырость.",
+    "category": "barygi",
+    "price": 130,
+    "min_level": 2,
+    "tags": ["канцелярия", "творчество"]
+  },
+  {
+    "item_id": "kinoshka-dzhentlmeny-udachi",
+    "title": "«Джентльмены удачи»",
+    "description": "Комедия про «воспитание» с шансом на искупление. Цитируют реплики при любом бытовом казусе.",
+    "category": "kinoshka",
+    "price": 50,
+    "min_level": 0,
+    "tags": ["кино", "ссср"]
+  },
+  {
+    "item_id": "kinoshka-kalina-krasnaya",
+    "title": "«Калина красная»",
+    "description": "Драма о дороге назад. Смотрят молча, потом долго спорят, кто здесь «свой», а кто «чужой».",
+    "category": "kinoshka",
+    "price": 50,
+    "min_level": 1,
+    "tags": ["кино", "драма"]
+  },
+  {
+    "item_id": "kinoshka-pobeg-shoushenk",
+    "title": "«Побег из Шоушенка»",
+    "description": "Про надежду и туннель под стеной. После просмотра все вдруг начинают любить шахматы.",
+    "category": "kinoshka",
+    "price": 50,
+    "min_level": 0,
+    "tags": ["кино", "надежда"]
+  },
+  {
+    "item_id": "kinoshka-zelenaya-milya",
+    "title": "«Зелёная миля»",
+    "description": "Тяжёлая история о доброте за решёткой. Предупреждают: с платком — только на верхней полке.",
+    "category": "kinoshka",
+    "price": 50,
+    "min_level": 2,
+    "tags": ["кино", "драма"]
+  },
+  {
+    "item_id": "kinoshka-brigada",
+    "title": "Сериал «Бригада»",
+    "description": "Культовый набор фраз и курток. Смотрят частями: как сериал, так и разбор «кто круче Саши Белого».",
+    "category": "kinoshka",
+    "price": 100,
+    "min_level": 3,
+    "tags": ["сериал", "криминал"]
+  },
+  {
+    "item_id": "kinoshka-mesto-vstrechi",
+    "title": "«Место встречи изменить нельзя»",
+    "description": "Детектив, где важнее характер, чем улики. Жигулёвский след и московские подвалы — вечная классика.",
+    "category": "kinoshka",
+    "price": 50,
+    "min_level": 1,
+    "tags": ["кино", "детектив"]
+  },
+  {
+    "item_id": "kinoshka-igla",
+    "title": "«Игла»",
+    "description": "Музыка Цоя и ночной город. Включают тихо, чтобы не перебить «философию коридора».",
+    "category": "kinoshka",
+    "price": 50,
+    "min_level": 4,
+    "tags": ["кино", "музыка"]
+  },
+  {
+    "item_id": "kinoshka-sluzhebnyy-roman",
+    "title": "«Служебный роман»",
+    "description": "Лёгкая комедия про офис — смешно и странно узнаваемо. «Нет повести печальнее…» — обязательная цитата.",
+    "category": "kinoshka",
+    "price": 50,
+    "min_level": 0,
+    "tags": ["кино", "комедия"]
+  },
+  {
+    "item_id": "balanda-borsch",
+    "title": "Борщ с пампушками",
+    "description": "Настоящий, бордовый, с запахом чеснока. Пампушки редкость — если дали, значит повар в духе.",
+    "category": "balanda",
+    "price": 0,
+    "min_level": 0,
+    "tags": ["обед", "горячее"]
+  },
+  {
+    "item_id": "balanda-kasha-grech",
+    "title": "Каша гречневая",
+    "description": "С маслом или без — как повезёт. Сытная, как обещание, что день не пропал.",
+    "category": "balanda",
+    "price": 0,
+    "min_level": 0,
+    "tags": ["завтрак", "каша"]
+  },
+  {
+    "item_id": "balanda-hleb-chernyy",
+    "title": "Хлеб чёрный",
+    "description": "Кусок на бульон или на чай. Главный аргумент в споре «кто последний в очереди».",
+    "category": "balanda",
+    "price": 0,
+    "min_level": 0,
+    "tags": ["хлеб", "столовая"]
+  },
+  {
+    "item_id": "balanda-kompot-sushenyy",
+    "title": "Компот из сухофруктов",
+    "description": "Сладковатый, мутноватый — как воспоминание о даче. Пьют залпом после обхода.",
+    "category": "balanda",
+    "price": 0,
+    "min_level": 0,
+    "tags": ["напиток", "обед"]
+  },
+  {
+    "item_id": "balanda-pyure-kotleta",
+    "title": "Пюре с котлетой",
+    "description": "День, когда столовая похожа на дом. Котлета с секретом — с каким именно мясом, никто не знает.",
+    "category": "balanda",
+    "price": 0,
+    "min_level": 1,
+    "tags": ["обед", "второе"]
+  },
+  {
+    "item_id": "balanda-solyanka",
+    "title": "Солянка мясная",
+    "description": "Острая, с оливками если повезло. Согревает лучше официальных новостей.",
+    "category": "balanda",
+    "price": 0,
+    "min_level": 2,
+    "tags": ["суп", "обед"]
+  },
+  {
+    "item_id": "balanda-makarony-flot",
+    "title": "Макароны по-флотски",
+    "description": "Флотская классика с фаршем. Порция ровно на то, чтобы не спорить с соседом за ложку.",
+    "category": "balanda",
+    "price": 0,
+    "min_level": 1,
+    "tags": ["обед", "макароны"]
+  }
+]

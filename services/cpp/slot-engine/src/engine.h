@@ -3,6 +3,7 @@
 #include "payout_table.h"
 
 #include <cstdint>
+#include <mutex>
 #include <optional>
 #include <random>
 #include <string>
@@ -13,9 +14,9 @@ namespace slot_engine {
 struct SpinResult {
     std::vector<int32_t> reels;
     std::string          combination_name;
-    double               multiplier;
-    int64_t              delta;
-    bool                 is_jackpot;
+    double               multiplier{0.0};
+    int64_t              delta{0};
+    bool                 is_jackpot{false};
 };
 
 class Engine {
@@ -29,6 +30,7 @@ private:
 
     const PayoutTable& table_;
     std::mt19937_64    default_rng_;
+    std::mutex         rng_mutex_;
 };
 
 }  // namespace slot_engine

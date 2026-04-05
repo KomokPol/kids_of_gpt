@@ -23,18 +23,22 @@ EtaResult Engine::calculate_eta(
     int64_t min_s = mode_cfg ? mode_cfg->min_seconds : 1200;
     int64_t max_s = mode_cfg ? mode_cfg->max_seconds : 2400;
 
-    std::uniform_int_distribution<int64_t> dist(min_s, max_s);
-    int64_t base_time = dist(rng_);
+    int64_t raw_eta;
+    {
+        std::lock_guard<std::mutex> lock(rng_mutex_);
 
-    double item_factor = 1.0 + std::max(0, item_count - 1) * 0.05;
-    auto raw_eta = static_cast<int64_t>(
-        std::round(static_cast<double>(base_time) * item_factor));
+        std::uniform_int_distribution<int64_t> dist(min_s, max_s);
+        int64_t base_time = dist(rng_);
 
-    // ±10% jitter
-    int64_t jitter_range = raw_eta / 10;
-    if (jitter_range > 0) {
-        std::uniform_int_distribution<int64_t> jitter_dist(-jitter_range, jitter_range);
-        raw_eta += jitter_dist(rng_);
+        double item_factor = 1.0 + std::max(0, item_count - 1) * 0.05;
+        raw_eta = static_cast<int64_t>(
+            std::round(static_cast<double>(base_time) * item_factor));
+
+        int64_t jitter_range = raw_eta / 10;
+        if (jitter_range > 0) {
+            std::uniform_int_distribution<int64_t> jitter_dist(-jitter_range, jitter_range);
+            raw_eta += jitter_dist(rng_);
+        }
     }
 
     raw_eta = std::max(raw_eta, int64_t{60});
@@ -49,9 +53,10 @@ EtaResult Engine::calculate_eta(
 }
 
 std::vector<WindowResult> Engine::get_delivery_windows(
-    const std::vector<std::string>& allowed_modes)
+    const std::vector<std::string>& allowed_modes) const
 {
-    std::unordered_set<std::string> allowed_set(allowed_modes.begin(), allowed_modes.end());
+    std::unordered_set<std::string> allowed_set(
+        allowed_modes.begin(), allowed_modes.end());
 
     std::vector<WindowResult> windows;
     windows.reserve(modes_.all().size());

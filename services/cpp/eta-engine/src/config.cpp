@@ -21,7 +21,6 @@ int64_t env_int_or(const char* key, int64_t fallback) {
 Config Config::from_env() {
     Config c;
     c.grpc_port            = static_cast<uint16_t>(env_int_or("ETA_ENGINE_GRPC_PORT", 50052));
-    c.redis_url            = env_or("ETA_ENGINE_REDIS_URL", "redis://localhost:6379");
     c.delivery_config_path = env_or("ETA_ENGINE_DELIVERY_CONFIG_PATH", "config/delivery_modes.json");
     c.log_level            = env_or("ETA_ENGINE_LOG_LEVEL", "info");
 

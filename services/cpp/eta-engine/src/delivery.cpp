@@ -9,6 +9,17 @@ DeliveryModes::DeliveryModes(std::vector<DeliveryModeConfig> modes)
     : modes_(std::move(modes))
 {
     for (size_t i = 0; i < modes_.size(); ++i) {
+        if (modes_[i].delivery_mode.empty())
+            throw std::invalid_argument("delivery_mode must not be empty");
+        if (modes_[i].display_name.empty())
+            throw std::invalid_argument(
+                "display_name must not be empty for: " + modes_[i].delivery_mode);
+        if (modes_[i].min_seconds < 0)
+            throw std::invalid_argument(
+                "min_seconds must be non-negative for: " + modes_[i].delivery_mode);
+        if (modes_[i].min_seconds > modes_[i].max_seconds)
+            throw std::invalid_argument(
+                "min_seconds > max_seconds for: " + modes_[i].delivery_mode);
         index_[modes_[i].delivery_mode] = i;
     }
 }
