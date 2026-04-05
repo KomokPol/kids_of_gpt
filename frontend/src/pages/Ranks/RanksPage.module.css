@@ -1,0 +1,157 @@
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6) var(--space-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+/* ── Header ── */
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ── Current rank hero ── */
+.currentCard {
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-2) 100%);
+}
+
+.currentInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+.currentLeft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.currentRank {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.currentEmoji {
+  font-size: 48px;
+  line-height: 1;
+}
+
+.currentRight {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.progressLabels {
+  display: flex;
+  justify-content: space-between;
+}
+
+.progressInfo {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* ── Ranks list ── */
+.ranksList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.rankCard {
+  transition: opacity var(--transition-fast);
+}
+
+.rankCardLocked {
+  opacity: 0.55;
+}
+
+.rankCardCurrent {
+  /* highlighted уже добавляет жёлтую рамку через Card */
+}
+
+.rankRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  align-items: flex-start;
+}
+
+.rankLeft {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.rankNum {
+  width: 20px;
+  flex-shrink: 0;
+  padding-top: 3px;
+}
+
+.rankEmoji {
+  font-size: 36px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.rankInfo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.rankTitleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+/* ── Perks ── */
+.rankPerks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: 4px;
+}
+
+.perkItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.perkDot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  transition: background-color var(--transition-fast);
+}
+
+/* ── Rank progress ── */
+.rankProgress {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .currentInner { grid-template-columns: 1fr; }
+  .rankRow { grid-template-columns: 1fr; }
+  .page { padding: var(--space-4); }
+}

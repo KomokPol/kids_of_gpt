@@ -5,9 +5,6 @@
 
 export const GAME_CATEGORIES = ['Все игры', 'Слоты', 'Карты', 'Рулетка']
 
-/** @typedef {'slots'|'cards'|'roulette'} GameCategory */
-/** @typedef {{id:string, title:string, description:string, emoji:string, category:GameCategory, badge:'ХИТ'|'НОВОЕ'|'БЕСПЛАТНО'|null, free:boolean}} Game */
-
 export async function getGames() {
   await new Promise(r => setTimeout(r, 200))
   return [
@@ -19,6 +16,7 @@ export async function getGames() {
       category: 'Слоты',
       badge: 'ХИТ',
       free: false,
+      requiredRank: 'бродяга',   // базовый доступ к играм
     },
     {
       id: 'smotrящий',
@@ -28,6 +26,7 @@ export async function getGames() {
       category: 'Карты',
       badge: 'НОВОЕ',
       free: false,
+      requiredRank: 'авторитет',
     },
     {
       id: 'prigovor',
@@ -37,6 +36,7 @@ export async function getGames() {
       category: 'Рулетка',
       badge: 'БЕСПЛАТНО',
       free: true,
+      requiredRank: 'бродяга',
     },
     {
       id: 'etap',
@@ -46,6 +46,7 @@ export async function getGames() {
       category: 'Карты',
       badge: null,
       free: false,
+      requiredRank: 'авторитет',
     },
     {
       id: 'obshak',
@@ -55,6 +56,7 @@ export async function getGames() {
       category: 'Карты',
       badge: null,
       free: false,
+      requiredRank: 'положенец',
     },
     {
       id: 'zona',
@@ -64,6 +66,7 @@ export async function getGames() {
       category: 'Слоты',
       badge: null,
       free: false,
+      requiredRank: 'положенец',
     },
   ]
 }
