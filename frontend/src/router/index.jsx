@@ -4,6 +4,8 @@ import CatalogPage from '../pages/Catalog/CatalogPage.jsx'
 import GamesPage from '../pages/Games/GamesPage.jsx'
 import ShmonPage from '../pages/Shmon/ShmonPage.jsx'
 import EduPage from '../pages/Edu/EduPage.jsx'
+import EduChatPage from '../pages/Edu/EduChatPage.jsx'
+import EduQuizPage from '../pages/Edu/EduQuizPage.jsx'
 import MarketPage from '../pages/Market/MarketPage.jsx'
 import RanksPage from '../pages/Ranks/RanksPage.jsx'
 import AccessGuard from '../ui/AccessGuard/AccessGuard.jsx'
@@ -16,6 +18,8 @@ export default function AppRouter() {
 
       {/* Шарага — доступна всем */}
       <Route path="/edu"           element={<EduPage />} />
+      <Route path="/edu/chat"      element={<EduChatPage />} />
+      <Route path="/edu/quiz"      element={<EduQuizPage />} />
 
       {/* Звания — доступны всем */}
       <Route path="/ranks"         element={<RanksPage />} />

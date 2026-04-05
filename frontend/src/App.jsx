@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import Header from './ui/Header/Header.jsx'
 import MusicPlayer from './ui/MusicPlayer/MusicPlayer.jsx'
+import DebugPanel from './ui/DebugPanel/DebugPanel.jsx'
 import AppRouter from './router/index.jsx'
 import useUserStore from './store/useUserStore.js'
 import styles from './App.module.css'
@@ -20,6 +21,7 @@ export default function App() {
         <AppRouter />
       </main>
       <MusicPlayer />
+      <DebugPanel />
     </div>
   )
 }

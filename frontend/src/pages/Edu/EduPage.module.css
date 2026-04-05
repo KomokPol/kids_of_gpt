@@ -1,3 +1,67 @@
+/* ── Launcher ── */
+.launcherPage {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: var(--space-10) var(--space-6) var(--space-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.launcherHeader {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-bottom: var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.launcherGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-5);
+}
+
+.launcherCard {
+  cursor: pointer;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.launcherCard:hover {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 0 0 1px var(--color-accent), 0 8px 24px rgba(245, 197, 24, 0.12);
+  transform: translateY(-2px);
+}
+
+.launcherEmoji {
+  font-size: 48px;
+  line-height: 1;
+  margin-bottom: var(--space-3);
+}
+
+.launcherArrow {
+  margin-top: var(--space-3);
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.launcherCard:hover .launcherArrow {
+  color: var(--color-accent);
+  transform: translateX(4px);
+}
+
+@media (max-width: 600px) {
+  .launcherGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .launcherPage {
+    padding: var(--space-4);
+  }
+}
+
+/* ── Chat page (used by EduChatPage) ── */
 .page {
   max-width: 1100px;
   margin: 0 auto;
@@ -9,7 +73,6 @@
   min-height: calc(100vh - 56px);
 }
 
-/* ── Left ── */
 .left {
   display: flex;
   flex-direction: column;
@@ -26,7 +89,6 @@
   border-bottom: 1px solid var(--color-border);
 }
 
-/* ── Courses ── */
 .courses {
   display: flex;
   flex-direction: column;
@@ -80,7 +142,6 @@
   margin-top: var(--space-1);
 }
 
-/* ── Right — chat ── */
 .right {
   display: flex;
   flex-direction: column;
@@ -92,7 +153,6 @@
   overflow: hidden;
 }
 
-/* Chat header */
 .chatHeader {
   display: flex;
   align-items: center;
@@ -133,7 +193,6 @@
   background-color: var(--color-surface-2);
 }
 
-/* Messages */
 .messages {
   flex: 1;
   overflow-y: auto;
@@ -205,7 +264,6 @@
   color: #000 !important;
 }
 
-/* Typing indicator */
 .typingBubble {
   display: flex;
   align-items: center;
@@ -222,15 +280,29 @@
   animation: typingBounce 1.2s infinite;
 }
 
-.typingDot:nth-child(2) { animation-delay: 0.2s; }
-.typingDot:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes typingBounce {
-  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-  30%            { transform: translateY(-6px); opacity: 1; }
+.typingDot:nth-child(2) {
+  animation-delay: 0.2s;
 }
 
-/* Input */
+.typingDot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingBounce {
+
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+
+  30% {
+    transform: translateY(-6px);
+    opacity: 1;
+  }
+}
+
 .inputRow {
   display: flex;
   gap: var(--space-2);
@@ -275,20 +347,23 @@
   flex-shrink: 0;
 }
 
-/* ── Responsive ── */
 @media (max-width: 900px) {
   .page {
     grid-template-columns: 1fr;
     height: auto;
   }
+
   .left {
     position: static;
   }
+
   .right {
     height: 600px;
   }
 }
 
 @media (max-width: 500px) {
-  .page { padding: var(--space-4); }
+  .page {
+    padding: var(--space-4);
+  }
 }
