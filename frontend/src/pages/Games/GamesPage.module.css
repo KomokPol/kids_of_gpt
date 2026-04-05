@@ -48,6 +48,27 @@
   cursor: pointer;
 }
 
+.gameCardLocked {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.gameLockOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 20, 20, 0.65);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  border-radius: var(--radius-lg);
+  z-index: 1;
+  font-size: 24px;
+  text-align: center;
+  padding: var(--space-2);
+}
+
 .gameBadge {
   position: absolute;
   top: var(--space-2);
@@ -70,19 +91,22 @@
 .gameSkeleton {
   height: 160px;
   border-radius: var(--radius-lg);
-  background: linear-gradient(
-    90deg,
-    var(--color-surface-2) 25%,
-    var(--color-surface-3) 50%,
-    var(--color-surface-2) 75%
-  );
+  background: linear-gradient(90deg,
+      var(--color-surface-2) 25%,
+      var(--color-surface-3) 50%,
+      var(--color-surface-2) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite;
 }
 
 @keyframes shimmer {
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
 }
 
 /* ── Debt card ── */
@@ -199,15 +223,22 @@
   .page {
     grid-template-columns: 1fr;
   }
+
   .right {
     position: static;
   }
+
   .gamesGrid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 500px) {
-  .page { padding: var(--space-4); }
-  .gamesGrid { grid-template-columns: 1fr; }
+  .page {
+    padding: var(--space-4);
+  }
+
+  .gamesGrid {
+    grid-template-columns: 1fr;
+  }
 }

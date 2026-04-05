@@ -39,7 +39,7 @@ export default function EduPage() {
       {/* Left — courses */}
       <div className={styles.left}>
         <div className={styles.leftHeader}>
-          <Text variant="h3"><Text variant="h3" as="span" color="accent">Шарага</Text></Text>
+          <Text variant="h3">Zondex <Text variant="h3" as="span" color="accent">Шарага</Text></Text>
           <Text variant="caption" color="muted">Учись. Зарабатывай. Погашай долги.</Text>
         </div>
 

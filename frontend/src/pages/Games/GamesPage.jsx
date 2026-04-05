@@ -5,6 +5,7 @@ import useGamesStore from '../../store/useGamesStore.js'
 import useLoanStore, { LOAN_AMOUNT, LOAN_BAN_LIMIT } from '../../store/useLoanStore.js'
 import useUserStore from '../../store/useUserStore.js'
 import { GAME_CATEGORIES } from '../../api/games.js'
+import { RANKS, hasRankAccess } from '../../config/ranks.js'
 import styles from './GamesPage.module.css'
 
 // Таблица авторитетов — заглушка
@@ -48,7 +49,7 @@ export default function GamesPage() {
   } = useLoanStore()
 
   // User store
-  const { balance, setBalance } = useUserStore()
+  const { balance, respect, setBalance } = useUserStore()
 
   const countdown = useCountdown(nextInterestAt)
 
@@ -96,13 +97,21 @@ export default function GamesPage() {
             </div>
           ) : (
             <div className={styles.gamesGrid}>
-              {filtered.map(game => (
-                <GameCard
-                  key={game.id}
-                  game={game}
-                  onClick={() => navigate(`/games/${game.id === 'shmon' ? 'shmon' : game.id}`)}
-                />
-              ))}
+              {filtered.map(game => {
+                const accessible = hasRankAccess(respect, game.requiredRank)
+                const requiredRank = game.requiredRank
+                  ? RANKS.find(r => r.id === game.requiredRank)
+                  : null
+                return (
+                  <GameCard
+                    key={game.id}
+                    game={game}
+                    accessible={accessible}
+                    requiredRank={requiredRank}
+                    onClick={() => accessible && navigate(`/games/${game.id === 'shmon' ? 'shmon' : game.id}`)}
+                  />
+                )
+              })}
             </div>
           )}
         </section>
@@ -207,7 +216,7 @@ export default function GamesPage() {
   )
 }
 
-function GameCard({ game, onClick }) {
+function GameCard({ game, accessible = true, requiredRank, onClick }) {
   const badgeVariant = {
     'ХИТ':       'warn',
     'НОВОЕ':      'info',
@@ -215,8 +224,26 @@ function GameCard({ game, onClick }) {
   }[game.badge] ?? 'default'
 
   return (
-    <Card padding="md" hoverable onClick={onClick} className={styles.gameCard}>
-      {game.badge && (
+    <Card
+      padding="md"
+      hoverable={accessible}
+      onClick={accessible ? onClick : undefined}
+      className={[styles.gameCard, !accessible ? styles.gameCardLocked : ''].filter(Boolean).join(' ')}
+    >
+      {/* Lock overlay для недоступных игр */}
+      {!accessible && (
+        <div className={styles.gameLockOverlay}>
+          <span>🔒</span>
+          {requiredRank && (
+            <Text variant="caption" color="muted" as="span">
+              <Text variant="caption" as="span" style={{ color: requiredRank.color }}>
+                {requiredRank.emoji} {requiredRank.title}
+              </Text>
+            </Text>
+          )}
+        </div>
+      )}
+      {game.badge && accessible && (
         <div className={styles.gameBadge}>
           <Chip variant={badgeVariant} size="sm">{game.badge}</Chip>
         </div>

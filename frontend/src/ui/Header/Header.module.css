@@ -75,6 +75,19 @@
   background-color: rgba(245, 197, 24, 0.12);
 }
 
+/* Locked nav link */
+.navLinkLocked {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.navLock {
+  font-size: 10px;
+  line-height: 1;
+  margin-right: 2px;
+}
+
 /* User block */
 .user {
   display: flex;
