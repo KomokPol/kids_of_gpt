@@ -18,6 +18,9 @@ grpc::Status SlotEngineServiceImpl::CalculateOutcome(
     auto start = std::chrono::steady_clock::now();
     const auto& corr_id = request->correlation_id();
 
+    if (request->spin_id().empty()) {
+        return {grpc::INVALID_ARGUMENT, "spin_id is required"};
+    }
     if (request->stake() <= 0) {
         spdlog::warn(
             R"({{"service":"slot-engine","correlation_id":"{}","msg":"invalid stake: {}"}})",
@@ -29,9 +32,6 @@ grpc::Status SlotEngineServiceImpl::CalculateOutcome(
             R"({{"service":"slot-engine","correlation_id":"{}","msg":"stake exceeds max: {}"}})",
             corr_id, request->stake());
         return {grpc::INVALID_ARGUMENT, "stake exceeds maximum allowed"};
-    }
-    if (request->spin_id().empty()) {
-        return {grpc::INVALID_ARGUMENT, "spin_id is required"};
     }
 
     std::optional<int64_t> seed;
@@ -84,7 +84,7 @@ grpc::Status SlotEngineServiceImpl::GetPayoutTable(
             proto_rule->add_pattern(p);
         }
         proto_rule->set_multiplier(rule.multiplier);
-        proto_rule->set_probability(0.0);
+        proto_rule->set_probability(table_.raw_probability(rule));
     }
     return grpc::Status::OK;
 }

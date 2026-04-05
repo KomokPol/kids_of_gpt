@@ -35,14 +35,14 @@ std::vector<int32_t> Engine::roll_reels(std::mt19937_64& rng) const {
 }
 
 SpinResult Engine::spin(int64_t stake, std::optional<int64_t> seed) {
-    std::mt19937_64 rng = seed.has_value()
-        ? std::mt19937_64(static_cast<uint64_t>(seed.value()))
-        : default_rng_;
+    std::vector<int32_t> reels;
 
-    auto reels = roll_reels(rng);
-
-    if (!seed.has_value()) {
-        default_rng_ = rng;
+    if (seed.has_value()) {
+        std::mt19937_64 rng(static_cast<uint64_t>(seed.value()));
+        reels = roll_reels(rng);
+    } else {
+        std::lock_guard<std::mutex> lock(rng_mutex_);
+        reels = roll_reels(default_rng_);
     }
 
     auto match = table_.match(reels);
