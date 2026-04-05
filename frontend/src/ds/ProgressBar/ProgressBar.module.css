@@ -1,0 +1,36 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 100%;
+}
+
+.labelText {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  align-self: flex-end;
+}
+
+.track {
+  width: 100%;
+  background-color: var(--color-surface-3);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+/* Sizes */
+.sm { height: 4px; }
+.md { height: 8px; }
+.lg { height: 12px; }
+
+.fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+
+/* Themes */
+.default { background-color: var(--color-accent); }
+.warn    { background-color: var(--color-warn); }
+.danger  { background-color: var(--color-danger); }
+.success { background-color: var(--color-success); }
