@@ -72,11 +72,11 @@ class Aggregator:
 
     async def dashboard(self) -> dict:
         total_str = await self._r.get(GLOBAL_COUNTER)
-        total = int(total_str) if total_str else 0
+        total = int(total_str.decode()) if total_str else 0
 
         raw_types = await self._r.hgetall(EVENT_TYPE_COUNTS)
         event_type_counts = {
-            k.decode(): int(v) for k, v in raw_types.items()
+            k.decode(): int(v.decode()) for k, v in raw_types.items()
         } if raw_types else {}
 
         raw_top = await self._r.zrevrange(TOP_USERS, 0, 9, withscores=True)
@@ -88,7 +88,12 @@ class Aggregator:
         total_users = await self._r.zcard(TOP_USERS)
 
         raw_recent = await self._r.lrange(EVENTS_STREAM, 0, 9)
-        recent = [json.loads(e) for e in raw_recent]
+        recent = []
+        for e in raw_recent:
+            try:
+                recent.append(json.loads(e))
+            except (json.JSONDecodeError, TypeError):
+                continue
 
         return {
             "total_events": total,
