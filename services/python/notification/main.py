@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+from contextlib import asynccontextmanager
 
 import redis.asyncio as aioredis
 import structlog
@@ -16,32 +17,33 @@ log = structlog.get_logger()
 
 app_state: dict = {}
 
-app = FastAPI(title="ZONDEX Notification Service", version="1.0.0")
+
+@asynccontextmanager
+async def lifespan(app_inst: FastAPI):
+    redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
+    log.info("notification.startup", redis_url=redis_url)
+    try:
+        r = aioredis.from_url(redis_url, decode_responses=False)
+        await r.ping()
+        app_state["redis"] = r
+        from .storage import NotificationStorage
+        app_state["storage"] = NotificationStorage(r)
+        log.info("notification.redis_connected")
+    except Exception:
+        log.error("notification.redis_connect_failed", redis_url=redis_url)
+        raise
+    yield
+    r = app_state.get("redis")
+    if r:
+        await r.aclose()
+    log.info("notification.shutdown")
+
+
+app = FastAPI(title="ZONDEX Notification Service", version="1.0.0", lifespan=lifespan)
 
 from .routes import router  # noqa: E402
 
 app.include_router(router)
-
-
-@app.on_event("startup")
-async def startup() -> None:
-    if app_state.get("redis") is None:
-        redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
-        log.info("notification.startup", redis_url=redis_url)
-        r = aioredis.from_url(redis_url, decode_responses=False)
-        app_state["redis"] = r
-    if app_state.get("storage") is None:
-        from .storage import NotificationStorage
-
-        app_state["storage"] = NotificationStorage(app_state["redis"])
-
-
-@app.on_event("shutdown")
-async def shutdown() -> None:
-    r = app_state.get("redis")
-    if r is not None and hasattr(r, "aclose"):
-        await r.aclose()
-    log.info("notification.shutdown")
 
 
 @app.get("/health")

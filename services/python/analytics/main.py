@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+from contextlib import asynccontextmanager
 
 import redis.asyncio as aioredis
 import structlog
@@ -17,27 +18,31 @@ structlog.configure(
 )
 log = structlog.get_logger()
 
-app = FastAPI(title="ZONDEX Analytics Service", version="1.0.0")
-app.include_router(router)
-
 app_state: dict = {}
 
 
-@app.on_event("startup")
-async def startup() -> None:
+@asynccontextmanager
+async def lifespan(app_inst: FastAPI):
     redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
     log.info("analytics.startup", redis_url=redis_url)
-    r = aioredis.from_url(redis_url, decode_responses=False)
-    app_state["redis"] = r
-    app_state["aggregator"] = Aggregator(r)
-
-
-@app.on_event("shutdown")
-async def shutdown() -> None:
+    try:
+        r = aioredis.from_url(redis_url, decode_responses=False)
+        await r.ping()
+        app_state["redis"] = r
+        app_state["aggregator"] = Aggregator(r)
+        log.info("analytics.redis_connected")
+    except Exception:
+        log.error("analytics.redis_connect_failed", redis_url=redis_url)
+        raise
+    yield
     r = app_state.get("redis")
     if r:
         await r.aclose()
     log.info("analytics.shutdown")
+
+
+app = FastAPI(title="ZONDEX Analytics Service", version="1.0.0", lifespan=lifespan)
+app.include_router(router)
 
 
 @app.get("/health")

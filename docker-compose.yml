@@ -1,4 +1,9 @@
 services:
+
+  # ══════════════════════════════════════════════════════════
+  # Infrastructure
+  # ══════════════════════════════════════════════════════════
+
   redis:
     image: redis:7-alpine
     healthcheck:
@@ -8,7 +13,9 @@ services:
       retries: 5
     restart: unless-stopped
 
-  # ── C++ engines ──────────────────────────────────────────
+  # ══════════════════════════════════════════════════════════
+  # C++ Engines
+  # ══════════════════════════════════════════════════════════
 
   slot-engine:
     build:
@@ -46,7 +53,345 @@ services:
       start_period: 10s
     restart: unless-stopped
 
-  # ── Python services ─────────────────────────────────────
+  # ══════════════════════════════════════════════════════════
+  # Go Platform Services
+  # ══════════════════════════════════════════════════════════
+
+  registry-auth:
+    build:
+      context: .
+      dockerfile: services/go/Dockerfile
+      args:
+        SERVICE_PATH: ./services/go/platform/registry-auth/
+    ports:
+      - "8101:8101"
+    environment:
+      - REGISTRY_ADDR=:8101
+      - JWT_SECRET=zondex-dev-secret-2026
+      - PROFILE_BASE_URL=http://profile:8102
+      - WALLET_BASE_URL=http://wallet:8103
+      - PROGRESSION_BASE_URL=http://progression:8104
+    depends_on:
+      profile:
+        condition: service_started
+      wallet:
+        condition: service_started
+      progression:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8101/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  profile:
+    build:
+      context: .
+      dockerfile: services/go/Dockerfile
+      args:
+        SERVICE_PATH: ./services/go/platform/profile/
+    ports:
+      - "8102:8102"
+    environment:
+      - PROFILE_ADDR=:8102
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8102/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  wallet:
+    build:
+      context: .
+      dockerfile: services/go/Dockerfile
+      args:
+        SERVICE_PATH: ./services/go/platform/wallet/
+    ports:
+      - "8103:8103"
+    environment:
+      - WALLET_ADDR=:8103
+      - PROGRESSION_BASE_URL=http://progression:8104
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8103/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  progression:
+    build:
+      context: .
+      dockerfile: services/go/Dockerfile
+      args:
+        SERVICE_PATH: ./services/go/platform/progression/
+    ports:
+      - "8104:8104"
+    environment:
+      - PROGRESSION_ADDR=:8104
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8104/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  leaderboard:
+    build:
+      context: .
+      dockerfile: services/go/Dockerfile
+      args:
+        SERVICE_PATH: ./services/go/platform/leaderboard/
+    ports:
+      - "8108:8108"
+    environment:
+      - LEADERBOARD_ADDR=:8108
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8108/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  go-notification:
+    build:
+      context: .
+      dockerfile: services/go/Dockerfile
+      args:
+        SERVICE_PATH: ./services/go/platform/notification/
+    ports:
+      - "8109:8109"
+    environment:
+      - NOTIFICATION_ADDR=:8109
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8109/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  catalog:
+    build:
+      context: .
+      dockerfile: services/go/Dockerfile
+      args:
+        SERVICE_PATH: ./services/go/platform/catalog/
+    ports:
+      - "8110:8110"
+    environment:
+      - CATALOG_ADDR=:8110
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8110/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: services/go/Dockerfile
+      args:
+        SERVICE_PATH: ./services/go/platform/scheduler/
+    ports:
+      - "8111:8111"
+    environment:
+      - SCHEDULER_ADDR=:8111
+      - WALLET_BASE_URL=http://wallet:8103
+      - PROGRESSION_BASE_URL=http://progression:8104
+      - NOTIFICATION_BASE_URL=http://go-notification:8109
+    depends_on:
+      wallet:
+        condition: service_started
+      progression:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8111/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  # ══════════════════════════════════════════════════════════
+  # Go Product Services
+  # ══════════════════════════════════════════════════════════
+
+  sharaga:
+    build:
+      context: .
+      dockerfile: services/go/Dockerfile
+      args:
+        SERVICE_PATH: ./services/go/product/sharaga/
+    ports:
+      - "8105:8105"
+    environment:
+      - SHARAGA_ADDR=:8105
+      - WALLET_BASE_URL=http://wallet:8103
+      - PROGRESSION_BASE_URL=http://progression:8104
+      - LEADERBOARD_BASE_URL=http://leaderboard:8108
+    depends_on:
+      wallet:
+        condition: service_started
+      progression:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8105/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  burmalda:
+    build:
+      context: .
+      dockerfile: services/go/Dockerfile
+      args:
+        SERVICE_PATH: ./services/go/product/burmalda/
+    ports:
+      - "8112:8112"
+    environment:
+      - BURMALDA_ADDR=:8112
+      - WALLET_BASE_URL=http://wallet:8103
+      - PROGRESSION_BASE_URL=http://progression:8104
+    depends_on:
+      wallet:
+        condition: service_started
+      progression:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8112/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  barygi:
+    build:
+      context: .
+      dockerfile: services/go/Dockerfile
+      args:
+        SERVICE_PATH: ./services/go/product/barygi/
+    ports:
+      - "8113:8113"
+    environment:
+      - BARYGI_ADDR=:8113
+      - WALLET_BASE_URL=http://wallet:8103
+      - PROGRESSION_BASE_URL=http://progression:8104
+    depends_on:
+      wallet:
+        condition: service_started
+      progression:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8113/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  kinoshka:
+    build:
+      context: .
+      dockerfile: services/go/Dockerfile
+      args:
+        SERVICE_PATH: ./services/go/product/kinoshka/
+    ports:
+      - "8114:8114"
+    environment:
+      - KINOSHKA_ADDR=:8114
+      - WALLET_BASE_URL=http://wallet:8103
+      - PROGRESSION_BASE_URL=http://progression:8104
+    depends_on:
+      wallet:
+        condition: service_started
+      progression:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8114/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  balanda:
+    build:
+      context: .
+      dockerfile: services/go/Dockerfile
+      args:
+        SERVICE_PATH: ./services/go/product/balanda/
+    ports:
+      - "8115:8115"
+    environment:
+      - BALANDA_ADDR=:8115
+      - WALLET_BASE_URL=http://wallet:8103
+      - PROGRESSION_BASE_URL=http://progression:8104
+    depends_on:
+      wallet:
+        condition: service_started
+      progression:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8115/healthz"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  # ══════════════════════════════════════════════════════════
+  # Gateway (BFF)
+  # ══════════════════════════════════════════════════════════
+
+  gateway:
+    build:
+      context: .
+      dockerfile: services/go/Dockerfile
+      args:
+        SERVICE_PATH: ./gateway/bff-go/
+    ports:
+      - "8080:8080"
+    environment:
+      - GATEWAY_ADDR=:8080
+      - JWT_SECRET=zondex-dev-secret-2026
+      - REGISTRY_BASE_URL=http://registry-auth:8101
+      - PROFILE_BASE_URL=http://profile:8102
+      - WALLET_BASE_URL=http://wallet:8103
+      - PROGRESSION_BASE_URL=http://progression:8104
+      - SHARAGA_BASE_URL=http://sharaga:8105
+      - LEADERBOARD_BASE_URL=http://leaderboard:8108
+      - NOTIFICATION_BASE_URL=http://go-notification:8109
+      - CATALOG_BASE_URL=http://catalog:8110
+      - BURMALDA_BASE_URL=http://burmalda:8112
+      - BARYGI_BASE_URL=http://barygi:8113
+      - KINOSHKA_BASE_URL=http://kinoshka:8114
+      - BALANDA_BASE_URL=http://balanda:8115
+    depends_on:
+      registry-auth:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8080/api/v1/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  # ══════════════════════════════════════════════════════════
+  # Python Intelligence Services
+  # ══════════════════════════════════════════════════════════
 
   analytics:
     build:

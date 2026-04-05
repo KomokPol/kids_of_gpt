@@ -27,7 +27,7 @@ async def list_scenarios() -> list[ScenarioListItem]:
     ]
 
 
-@router.post("/sessions", response_model=SessionOut)
+@router.post("/sessions", response_model=SessionOut, status_code=201)
 async def create_session(body: StartSessionRequest) -> SessionOut:
     eng = get_engine()
     try:
