@@ -88,6 +88,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EntitlementsSnapshot'
+  /progression/progress-bar:
+    get:
+      summary: Read progress bar data and UX burden state
+      responses:
+        '200':
+          description: Progress bar snapshot
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntitlementsSnapshot'
   /sharaga/challenges/{challengeId}/run:
     post:
       summary: Run challenge and apply rewards
@@ -132,6 +142,9 @@ components:
           type: boolean
         idempotencyKey:
           type: string
+        experienceMode:
+          type: string
+          enum: [repair, punish]
     RegisterResponse:
       type: object
       properties:
@@ -230,6 +243,31 @@ components:
         canEarlyUnbanViaTasks:
           type: boolean
         filmSubscriptionTier:
+          type: string
+        progressPercent:
+          type: integer
+        xpToNextLevel:
+          type: integer
+          format: int64
+        currentStreakDays:
+          type: integer
+        lastActivityUnix:
+          type: integer
+          format: int64
+        progressMode:
+          type: string
+          enum: [repair, punish]
+        uiBurdenScore:
+          type: integer
+        forcedActionDelayMs:
+          type: integer
+        captchaEnabled:
+          type: boolean
+        adsIntensity:
+          type: integer
+        memeBadge:
+          type: string
+        funnyMessage:
           type: string
     RunChallengeRequest:
       type: object
