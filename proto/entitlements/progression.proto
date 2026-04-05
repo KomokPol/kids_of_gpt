@@ -19,6 +19,17 @@ message EntitlementSnapshot {
   int64 banned_until_unix = 12;
   bool can_early_unban_via_tasks = 13;
   string film_subscription_tier = 14;
+  int32 progress_percent = 15;
+  int64 xp_to_next_level = 16;
+  int32 current_streak_days = 17;
+  int64 last_activity_unix = 18;
+  string progress_mode = 19;
+  int32 ui_burden_score = 20;
+  int32 forced_action_delay_ms = 21;
+  bool captcha_enabled = 22;
+  int32 ads_intensity = 23;
+  string meme_badge = 24;
+  string funny_message = 25;
 }
 
 message InitProgressRequest {
@@ -26,6 +37,7 @@ message InitProgressRequest {
   int32 level = 2;
   int64 xp = 3;
   string idempotency_key = 4;
+  string mode = 5;
 }
 
 message InitProgressResponse {
@@ -61,6 +73,16 @@ message RecalculateRestrictionsResponse {
   EntitlementSnapshot snapshot = 1;
 }
 
+message SyncWalletStateRequest {
+  string user_id = 1;
+  int64 wallet_balance = 2;
+  int64 debt_balance = 3;
+}
+
+message SyncWalletStateResponse {
+  EntitlementSnapshot snapshot = 1;
+}
+
 message ApplyManualBanRequest {
   string user_id = 1;
   int64 banned_until_unix = 2;
@@ -85,6 +107,7 @@ service ProgressionService {
   rpc GetSnapshot(GetSnapshotRequest) returns (GetSnapshotResponse);
   rpc GrantXP(GrantXPRequest) returns (GrantXPResponse);
   rpc RecalculateRestrictions(RecalculateRestrictionsRequest) returns (RecalculateRestrictionsResponse);
+  rpc SyncWalletState(SyncWalletStateRequest) returns (SyncWalletStateResponse);
   rpc ApplyManualBan(ApplyManualBanRequest) returns (ApplyManualBanResponse);
   rpc LiftBan(LiftBanRequest) returns (LiftBanResponse);
 }

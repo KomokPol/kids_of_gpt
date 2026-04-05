@@ -84,6 +84,17 @@ message ListLedgerEntriesResponse {
   string next_cursor = 2;
 }
 
+message Debtor {
+  string user_id = 1;
+  int64 balance = 2;
+}
+
+message ListDebtorsRequest {}
+
+message ListDebtorsResponse {
+  repeated Debtor debtors = 1;
+}
+
 service WalletService {
   rpc InitWallet(InitWalletRequest) returns (InitWalletResponse);
   rpc GetBalance(GetBalanceRequest) returns (GetBalanceResponse);
@@ -91,4 +102,5 @@ service WalletService {
   rpc Debit(DebitRequest) returns (DebitResponse);
   rpc AccrueDebtInterest(AccrueDebtInterestRequest) returns (AccrueDebtInterestResponse);
   rpc ListLedgerEntries(ListLedgerEntriesRequest) returns (ListLedgerEntriesResponse);
+  rpc ListDebtors(ListDebtorsRequest) returns (ListDebtorsResponse);
 }

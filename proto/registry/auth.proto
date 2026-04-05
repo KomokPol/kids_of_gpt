@@ -24,6 +24,7 @@ message RegisterRequest {
   string photo_url = 6;
   bool accepted_rules = 7;
   string idempotency_key = 8;
+  string experience_mode = 9;
 }
 
 message RegisterResponse {
