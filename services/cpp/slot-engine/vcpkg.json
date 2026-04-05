@@ -1,0 +1,12 @@
+{
+  "name": "slot-engine",
+  "version-string": "0.1.0",
+  "description": "ZONDEX slot-engine: RNG and payout tables for Burmalda casino",
+  "dependencies": [
+    "grpc",
+    "protobuf",
+    "nlohmann-json",
+    "spdlog",
+    "gtest"
+  ]
+}

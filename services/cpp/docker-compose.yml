@@ -1,0 +1,22 @@
+services:
+  slot-engine:
+    build:
+      context: ../../
+      dockerfile: services/cpp/slot-engine/Dockerfile
+    ports:
+      - "50051:50051"
+    environment:
+      - SLOT_ENGINE_GRPC_PORT=50051
+      - SLOT_ENGINE_PAYOUT_TABLE_PATH=/src/services/cpp/slot-engine/config/payout_table.json
+      - SLOT_ENGINE_LOG_LEVEL=info
+
+  eta-engine:
+    build:
+      context: ../../
+      dockerfile: services/cpp/eta-engine/Dockerfile
+    ports:
+      - "50052:50052"
+    environment:
+      - ETA_ENGINE_GRPC_PORT=50052
+      - ETA_ENGINE_DELIVERY_CONFIG_PATH=/src/services/cpp/eta-engine/config/delivery_modes.json
+      - ETA_ENGINE_LOG_LEVEL=info
