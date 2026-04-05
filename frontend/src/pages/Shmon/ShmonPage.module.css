@@ -1,0 +1,255 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6) var(--space-12);
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: var(--space-8);
+  align-items: start;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  position: sticky;
+  top: calc(56px + var(--space-6));
+}
+
+/* ── Game card ── */
+.gameCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.gameTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+/* ── Reels ── */
+.reels {
+  display: flex;
+  gap: var(--space-4);
+  justify-content: center;
+}
+
+.reel {
+  width: 100px;
+  height: 100px;
+  background-color: var(--color-surface-2);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.reelSpinning {
+  animation: reelSpin 0.15s linear infinite;
+  border-color: var(--color-accent);
+}
+
+.reelWin {
+  border-color: var(--color-success);
+  box-shadow: 0 0 12px rgba(46, 204, 113, 0.3);
+}
+
+@keyframes reelSpin {
+  0%   { transform: scaleY(1); }
+  50%  { transform: scaleY(0.85); }
+  100% { transform: scaleY(1); }
+}
+
+.reelEmoji {
+  font-size: 40px;
+  line-height: 1;
+  user-select: none;
+}
+
+/* ── Win message ── */
+.winMsg {
+  text-align: center;
+  min-height: 20px;
+}
+
+.winMsgWin {
+  animation: fadeIn 0.3s ease;
+}
+
+.winMsgLose {
+  opacity: 0.6;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hint {
+  text-align: center;
+  opacity: 0.6;
+}
+
+/* ── Bet controls ── */
+.betRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.betControls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0 var(--space-2);
+  height: 36px;
+}
+
+.betBtn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--color-text);
+  font-size: var(--font-size-lg);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+  line-height: 1;
+}
+
+.betBtn:hover:not(:disabled) {
+  background-color: var(--color-surface-3);
+}
+
+.betBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.betValue {
+  min-width: 40px;
+  text-align: center;
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ── Payouts ── */
+.payouts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.payoutRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.payoutLabel {
+  font-size: var(--font-size-md);
+  line-height: 1;
+}
+
+/* ── Session stats ── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* ── Daily card ── */
+.dailyCard {
+  border-color: var(--color-accent) !important;
+  box-shadow: 0 0 0 1px rgba(245, 197, 24, 0.2);
+}
+
+/* ── Debt ── */
+.debtRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+/* ── Leaderboard ── */
+.leaderboard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.leaderRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.leaderRank {
+  width: 14px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.leaderAvatar {
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-surface-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.leaderLogin {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .page { grid-template-columns: 1fr; }
+  .right { position: static; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 500px) {
+  .page { padding: var(--space-4); }
+  .reels { gap: var(--space-2); }
+  .reel { width: 80px; height: 80px; }
+  .reelEmoji { font-size: 32px; }
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}

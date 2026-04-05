@@ -1,0 +1,52 @@
+.starBar {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  line-height: 1;
+  font-size: 14px;
+}
+
+/* The track holds both layers */
+.starsTrack {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Bottom layer: empty (grey) stars */
+.starsEmpty {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: var(--color-surface-3);
+}
+
+/* Top layer: filled (yellow) stars, clipped by width */
+.starsFilled {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  overflow: hidden;
+  color: var(--color-accent);
+  white-space: nowrap;
+  height: 100%;
+}
+
+/* Fixed star size — 16×16px for all instances */
+.starIcon {
+  flex-shrink: 0;
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+/* Numeric value */
+.value {
+  font-size: 14px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent);
+  line-height: 1;
+}

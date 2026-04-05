@@ -1,0 +1,40 @@
+.currency {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-bold);
+  line-height: 1;
+}
+
+/* Sizes */
+.sm  { font-size: var(--font-size-sm); }
+.md  { font-size: var(--font-size-md); }
+.lg  { font-size: var(--font-size-xl); }
+.xl  { font-size: var(--font-size-2xl); }
+
+/* Colors */
+.color_default { color: var(--color-text); }
+.color_accent  { color: var(--color-accent); }
+.color_muted   { color: var(--color-text-muted); }
+
+/* Free */
+.free {
+  color: var(--color-success);
+  font-weight: var(--font-weight-semibold);
+}
+
+.amount {
+  font-weight: inherit;
+  line-height: 1;
+}
+
+.unit {
+  font-size: 0.65em;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+  line-height: 1;
+  /* align to bottom of number via baseline — no align-self override */
+  position: relative;
+  bottom: 0.05em;
+}

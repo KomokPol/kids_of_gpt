@@ -1,0 +1,131 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  backdrop-filter: blur(8px);
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--space-6);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.logoText {
+  transition: color var(--transition-fast);
+}
+
+.logo:hover .logoText {
+  color: var(--color-accent) !important;
+}
+
+/* Nav */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-left: auto;
+}
+
+.navLink {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: background-color var(--transition-fast);
+}
+
+.navLink span {
+  color: var(--color-text-muted);
+  transition: color var(--transition-fast);
+}
+
+.navLink:hover {
+  background-color: var(--color-surface-2);
+}
+
+.navLink:hover span {
+  color: var(--color-text);
+}
+
+.navLinkActive {
+  background-color: rgba(245, 197, 24, 0.08);
+}
+
+.navLinkActive span {
+  color: var(--color-accent) !important;
+}
+
+.navLinkActive:hover {
+  background-color: rgba(245, 197, 24, 0.12);
+}
+
+/* User block */
+.user {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-left: var(--space-4);
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.userStats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.stat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);
+}
+
+.userLogin {
+  color: var(--color-text-muted);
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Loading skeleton */
+.userLoading {
+  display: block;
+  width: 120px;
+  height: 20px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(90deg,
+      var(--color-surface-2) 25%,
+      var(--color-surface-3) 50%,
+      var(--color-surface-2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
