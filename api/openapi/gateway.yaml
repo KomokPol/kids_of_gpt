@@ -1,0 +1,258 @@
+openapi: 3.1.0
+info:
+  title: ZONDEX Gateway API
+  version: 0.2.0
+servers:
+  - url: /api/v1
+paths:
+  /health:
+    get:
+      responses:
+        '200':
+          description: OK
+  /auth/register:
+    post:
+      summary: Register new inmate identity and bootstrap profile/wallet/progression
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '200':
+          description: Registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RegisterResponse'
+  /auth/login:
+    post:
+      summary: Login by inmate number and PIN
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Logged in
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+  /auth/refresh:
+    post:
+      summary: Refresh access token by refresh token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshRequest'
+      responses:
+        '200':
+          description: Refreshed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+  /profile/me:
+    get:
+      summary: Read current profile
+      responses:
+        '200':
+          description: Profile data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Profile'
+  /wallet/balance:
+    get:
+      summary: Read wallet and debt balances
+      responses:
+        '200':
+          description: Current balances
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletBalance'
+  /progression/snapshot:
+    get:
+      summary: Read progression and entitlements snapshot
+      responses:
+        '200':
+          description: Snapshot
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntitlementsSnapshot'
+  /sharaga/challenges/{challengeId}/run:
+    post:
+      summary: Run challenge and apply rewards
+      parameters:
+        - in: path
+          name: challengeId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunChallengeRequest'
+      responses:
+        '200':
+          description: Challenge completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunChallengeResponse'
+components:
+  schemas:
+    RegisterRequest:
+      type: object
+      required: [nickname, article, term, cell, pin, acceptedRules, idempotencyKey]
+      properties:
+        nickname:
+          type: string
+        article:
+          type: string
+        term:
+          type: string
+        cell:
+          type: string
+        pin:
+          type: string
+        photoUrl:
+          type: string
+        acceptedRules:
+          type: boolean
+        idempotencyKey:
+          type: string
+    RegisterResponse:
+      type: object
+      properties:
+        userId:
+          type: string
+        inmateNumber:
+          type: string
+        barcodeUrl:
+          type: string
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+    LoginRequest:
+      type: object
+      required: [inmateNumber, pin]
+      properties:
+        inmateNumber:
+          type: string
+        pin:
+          type: string
+    RefreshRequest:
+      type: object
+      required: [refreshToken]
+      properties:
+        refreshToken:
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        userId:
+          type: string
+        inmateNumber:
+          type: string
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+    Profile:
+      type: object
+      properties:
+        userId:
+          type: string
+        nickname:
+          type: string
+        article:
+          type: string
+        term:
+          type: string
+        cell:
+          type: string
+        photoUrl:
+          type: string
+    WalletBalance:
+      type: object
+      properties:
+        balance:
+          type: integer
+          format: int64
+        debtBalance:
+          type: integer
+          format: int64
+    EntitlementsSnapshot:
+      type: object
+      properties:
+        level:
+          type: integer
+        xp:
+          type: integer
+          format: int64
+        walletBalance:
+          type: integer
+          format: int64
+        debtBalance:
+          type: integer
+          format: int64
+        searchEnabled:
+          type: boolean
+        filtersEnabled:
+          type: boolean
+        cartLimit:
+          type: integer
+        deliveryModes:
+          type: array
+          items:
+            type: string
+        preciseEtaEnabled:
+          type: boolean
+        menuChoiceCount:
+          type: integer
+        dailySpinAvailable:
+          type: boolean
+        bannedUntilUnix:
+          type: integer
+          format: int64
+        canEarlyUnbanViaTasks:
+          type: boolean
+        filmSubscriptionTier:
+          type: string
+    RunChallengeRequest:
+      type: object
+      required: [mode, idempotencyKey]
+      properties:
+        mode:
+          type: string
+          enum: [quiz, scenario, interrogation]
+        idempotencyKey:
+          type: string
+    RunChallengeResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        xpAwarded:
+          type: integer
+          format: int64
+        moneyAwarded:
+          type: integer
+          format: int64
+        walletBalance:
+          type: integer
+          format: int64
+        newLevel:
+          type: integer

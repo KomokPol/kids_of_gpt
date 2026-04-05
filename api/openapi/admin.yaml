@@ -1,0 +1,17 @@
+openapi: 3.1.0
+info:
+  title: ZONDEX Admin API
+  version: 0.1.0
+servers:
+  - url: /admin/api/v1
+paths:
+  /health:
+    get:
+      responses:
+        '200':
+          description: OK
+  /content:
+    get:
+      responses:
+        '200':
+          description: Content list

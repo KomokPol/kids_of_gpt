@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package zondex.barygi.v1;
+
+option go_package = "example.com/zondex/proto/barygi/v1;barygiv1";
+
+message CatalogItem {
+  string item_id = 1;
+  string title = 2;
+  int64 price = 3;
+}
+
+message ListCatalogRequest {
+  string user_id = 1;
+}
+
+message ListCatalogResponse {
+  repeated CatalogItem items = 1;
+}
+
+service BarygiService {
+  rpc ListCatalog(ListCatalogRequest) returns (ListCatalogResponse);
+}

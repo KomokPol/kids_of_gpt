@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package zondex.burmalda.v1;
+
+option go_package = "example.com/zondex/proto/burmalda/v1;burmaldav1";
+
+message SpinRequest {
+  string user_id = 1;
+  int64 stake = 2;
+}
+
+message SpinResponse {
+  string spin_id = 1;
+  int64 delta = 2;
+  string outcome = 3;
+}
+
+service BurmaldaService {
+  rpc Spin(SpinRequest) returns (SpinResponse);
+}
